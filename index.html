@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Exemple de page avec status des sites web</title>
+    <style>
+      .ok { color: green; }
+      .error { color: red; }
+    </style>
+  </head>
+  <body>
+    <h1>Status des sites web</h1>
+    <div id="status"></div>
+    <script>
+      function getStatus() {
+        fetch('https://api.slohweb.ml/status.php')
+          .then(response => response.json())
+          .then(data => {
+            let statusDiv = document.getElementById('status');
+            let statusHtml = '';
+            for (let site in data) {
+              if (data.hasOwnProperty(site)) {
+                let statusClass = (data[site] === 'OK') ? 'ok' : 'error';
+                statusHtml += '<p>' + site + ': <span class="' + statusClass + '">' + data[site] + '</span></p>';
+              }
+            }
+            statusDiv.innerHTML = statusHtml;
+          })
+          .catch(error => {
+            let statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '<p>Erreur lors de la récupération du status : ' + error.message + '</p>';
+          });
+      }
+      getStatus();
+    </script>
+  </body>
+</html>
