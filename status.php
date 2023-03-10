@@ -1,3 +1,4 @@
+<?php
 $status = array(
   "wiki-bot" => "",
   "koyoweb" => ""
@@ -19,3 +20,4 @@ if(strpos($koyoweb_status, "Koyoweb") !== false) {
 
 header('Content-Type: application/json');
 echo json_encode($status);
+?>
